@@ -1,5 +1,6 @@
-import { IonButton, IonCol, IonContent, IonHeader, IonicSafeString, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
-import { useRef, useState } from 'react';
+import { IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonicSafeString, IonImg, IonInput, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
+import { addCircle, addCircleOutline, addOutline, createOutline } from 'ionicons/icons';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import user from '../lib/user';
 
@@ -10,6 +11,7 @@ export default function EmitirFactura() {
     formState: { errors },
   } = useForm();
   const [client, setClient] = useState<Cliente>()
+  const [details, setDetails] = useState<DetalleFactura[]>([])
 
   const inputClientRef = useRef<HTMLIonInputElement>(null)
 
@@ -31,6 +33,19 @@ export default function EmitirFactura() {
     }
     const response = await usuarioResponse.json() as Cliente;
     setClient(response)
+  }
+
+  const modal = useRef<HTMLIonModalElement>(null);
+  const page = useRef(null);
+
+  const [presentingElement, setPresentingElement] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setPresentingElement(page.current);
+  }, []);
+
+  function dismiss() {
+    modal.current?.dismiss();
   }
 
   return (
@@ -58,7 +73,7 @@ export default function EmitirFactura() {
                   cantidad: 1,
                   precioUnitario: 30.67,
                   total: 30.67,
-                  servicioId: 3
+                  servicioId: 2
                 }
               ]
             }),
@@ -91,11 +106,68 @@ export default function EmitirFactura() {
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonButton type="submit" color="primary" expand="block">Crear</IonButton>
+              <IonButton id="open-modal" color="primary" expand="block">
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <IonIcon icon={addOutline}></IonIcon>
+                  Agregar Servicio
+                </div>
+              </IonButton>
+            </IonCol>
+          </IonRow>
+
+          <IonGrid>
+            <IonRow>
+              <IonCol>Id Servicio</IonCol>
+              <IonCol>Cantidad</IonCol>
+              <IonCol>Total</IonCol>
+            </IonRow>
+            {details.map(
+              (detail) =>
+                <IonRow>
+                  <IonCol>{detail.servicioId}</IonCol>
+                  <IonCol>{detail.cantidad}</IonCol>
+                  <IonCol>{detail.total}</IonCol>
+                </IonRow>)
+            }
+          </IonGrid>
+
+          <IonRow>
+            <IonCol>
+              <IonButton type="submit" color="success" expand="block">Crear Factura</IonButton>
             </IonCol>
           </IonRow>
         </form>
       </IonContent>
+
+      <IonModal ref={modal} trigger="open-modal" presentingElement={presentingElement!}>
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Seleccionar Servicio</IonTitle>
+            <IonButtons slot="end">
+              <IonButton onClick={() => dismiss()}>Close</IonButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          <IonList>
+            <IonItem onClick={() => {
+              setDetails(prev => [...prev, {
+                cantidad: 1,
+                precioUnitario: 30.67,
+                total: 30.67,
+                servicioId: 1
+              }])
+              dismiss()
+            }}>
+              <IonLabel>
+                <h2>Connor Smith</h2>
+                <p>Sales Rep</p>
+              </IonLabel>
+            </IonItem>
+          </IonList>
+        </IonContent>
+      </IonModal>
+
     </IonPage>
   )
 }
