@@ -22,7 +22,7 @@ export default function RegistrarServicio({ service, editService }: { service?: 
 
   return (
     <IonPage>
-      <IonContent fullscreen>
+      <IonContent className="ion-padding" fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Servicio</IonTitle>
@@ -66,7 +66,7 @@ export default function RegistrarServicio({ service, editService }: { service?: 
           </IonItem>
           <IonItem lines="full">
             <IonLabel position="floating">Precio Unitario</IonLabel>
-            <IonInput value={service ? service.precioUnitario : ''} {...register('precioUnitario')} type="text" required></IonInput>
+            <IonInput value={service ? service.precioUnitario : ''} {...register('precioUnitario')} step="any" type="number" required></IonInput>
           </IonItem>
           <IonRow>
             <IonCol>

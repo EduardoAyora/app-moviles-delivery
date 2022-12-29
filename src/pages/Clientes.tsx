@@ -49,7 +49,7 @@ export default function Clientes() {
   }, [])
 
   return (
-    <div>
+    <div className="ion-padding">
       {
         clients == null ? <IonSpinner></IonSpinner>
           :
@@ -68,7 +68,7 @@ export default function Clientes() {
                   padding: '0 1rem',
                   marginBottom: '1rem'
                 }}>
-                  <div>
+                  <div style={{maxWidth: '60%'}}>
                     <p>
                       Cliente: {client.identificacionNumero}
                     </p>

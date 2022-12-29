@@ -54,7 +54,7 @@ export default function Navbar({ children }: { children: any }) {
             <IonTitle>Menu</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent className="ion-padding">
+        <IonContent>
           {children}
         </IonContent>
       </IonPage>

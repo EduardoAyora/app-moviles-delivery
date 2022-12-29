@@ -21,7 +21,7 @@ export default function RegistrarCliente({ client, editClient }: { client?: Clie
 
   return (
     <IonPage>
-      <IonContent fullscreen>
+      <IonContent className="ion-padding" fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Cliente</IonTitle>
