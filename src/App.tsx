@@ -4,6 +4,8 @@ import { IonReactRouter } from '@ionic/react-router';
 import Registro from './pages/Registro';
 import Login from './pages/Login';
 import Home from './pages/Home'
+import Servicios from './pages/Servicios'
+import EmitirFactura from './pages/EmitirFactura'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -24,8 +26,11 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Navbar from './components/common/Navbar';
-import RegistrarUsuarios from './pages/RegistrarUsuarios';
-import RegistrarCliente from './pages/RegistrarUsuarios';
+import RegistrarUsuarios from './pages/RegistrarCliente';
+import RegistrarCliente from './pages/RegistrarCliente';
+import Clientes from './pages/Clientes';
+import RegistrarServicio from './pages/RegistrarServicio';
+import Facturas from './pages/Facturas';
 
 setupIonicReact();
 
@@ -45,6 +50,21 @@ const App: React.FC = () => (
           </Route>
           <Route exact path="/registro-cliente">
             <RegistrarCliente />
+          </Route>
+          <Route exact path="/clientes">
+            <Clientes />
+          </Route>
+          <Route exact path="/registro-servicio">
+            <RegistrarServicio />
+          </Route>
+          <Route exact path="/servicios">
+            <Servicios />
+          </Route>
+          <Route exact path="/crear-factura">
+            <EmitirFactura />
+          </Route>
+          <Route exact path="/facturas">
+            <Facturas />
           </Route>
           <Route exact path="/">
             <Redirect to="/home" />

@@ -67,7 +67,7 @@ const Home: React.FC = () => {
           </IonItem>
           <IonRow>
             <IonCol>
-              <IonButton type="submit" color="danger" expand="block">Submit</IonButton>
+              <IonButton type="submit" color="danger" expand="block">Registrarse</IonButton>
             </IonCol>
           </IonRow>
         </form>

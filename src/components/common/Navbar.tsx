@@ -25,6 +25,21 @@ export default function Navbar({ children }: { children: any }) {
                 <li style={{ listStyleType: 'none' }}>
                   <Link to='/registro-cliente'>Registrar Cliente</Link>
                 </li>
+                <li style={{ listStyleType: 'none' }}>
+                  <Link to='/clientes'>Clientes</Link>
+                </li>
+                <li style={{ listStyleType: 'none' }}>
+                  <Link to='/registro-servicio'>Registrar Servicio</Link>
+                </li>
+                <li style={{ listStyleType: 'none' }}>
+                  <Link to='/servicios'>Servicios</Link>
+                </li>
+                <li style={{ listStyleType: 'none' }}>
+                  <Link to='/crear-factura'>Emitir factura</Link>
+                </li>
+                <li style={{ listStyleType: 'none' }}>
+                  <Link to='/facturas'>Facturas</Link>
+                </li>
               </ul>
             </div>
           </div>

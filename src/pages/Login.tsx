@@ -62,7 +62,7 @@ const Login: React.FC = () => {
           </IonItem>
           <IonRow>
             <IonCol>
-              <IonButton type="submit" color="danger" expand="block">Submit</IonButton>
+              <IonButton type="submit" color="danger" expand="block">Ingresar</IonButton>
             </IonCol>
           </IonRow>
         </form>

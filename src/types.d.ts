@@ -3,3 +3,13 @@ interface Usuario {
   password: string;
   confirmPassword?: string;
 }
+
+interface Cliente {
+  id: number;
+  tipoIdentificacion: string;
+  identificacionNumero: string;
+  nombre: string;
+  direccion: string;
+  telefono: string;
+  correoElectronico: string;
+}
