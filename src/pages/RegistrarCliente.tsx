@@ -61,30 +61,30 @@ export default function RegistrarCliente({ client, editClient }: { client?: Clie
         })}>
           <IonItem lines="full">
             <IonLabel position="floating">Tipo de identificación</IonLabel>
-            <IonSelect value={client?.tipoIdentificacion} {...register('tipoIdentificacion')} placeholder="Tipo de identificación">
+            <IonSelect value={client ? client.tipoIdentificacion : ''} {...register('tipoIdentificacion')} placeholder="Tipo de identificación">
               <IonSelectOption value="CEDULA">Cédula</IonSelectOption>
               <IonSelectOption value="RUC">RUC</IonSelectOption>
             </IonSelect>
           </IonItem>
           <IonItem lines="full">
             <IonLabel position="floating">Número de identificación</IonLabel>
-            <IonInput value={client?.identificacionNumero} {...register('identificacionNumero')} type="text" required></IonInput>
+            <IonInput value={client ? client.identificacionNumero : ''} {...register('identificacionNumero')} type="text" required></IonInput>
           </IonItem>
           <IonItem lines="full">
             <IonLabel position="floating">Nombre</IonLabel>
-            <IonInput value={client?.nombre} {...register('nombre')} type="text" required></IonInput>
+            <IonInput value={client ? client.nombre : ''} {...register('nombre')} type="text" required></IonInput>
           </IonItem>
           <IonItem lines="full">
             <IonLabel position="floating">Dirección</IonLabel>
-            <IonInput value={client?.direccion} {...register('direccion')} type="text" required></IonInput>
+            <IonInput value={client ? client.direccion : ''} {...register('direccion')} type="text" required></IonInput>
           </IonItem>
           <IonItem lines="full">
             <IonLabel position="floating">Teléfono</IonLabel>
-            <IonInput value={client?.telefono} {...register('telefono')} type="text" required></IonInput>
+            <IonInput value={client ? client.telefono : ''} {...register('telefono')} type="text" required></IonInput>
           </IonItem>
           <IonItem lines="full">
             <IonLabel position="floating">Correo</IonLabel>
-            <IonInput value={client?.correoElectronico} {...register('correoElectronico')} type="email" required></IonInput>
+            <IonInput value={client ? client.correoElectronico : ''} {...register('correoElectronico')} type="email" required></IonInput>
           </IonItem>
           <IonRow>
             <IonCol>
