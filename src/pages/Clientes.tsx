@@ -14,6 +14,16 @@ export default function Clientes() {
     });
   };
 
+  const deleteClient = async (clientId: number) => {
+    const responseData = await fetch(`${process.env.REACT_APP_API_URL}/cliente/delete/${clientId}`)
+    if (!responseData.ok) {
+      const response = await responseData.text();
+      return presentToast('top', response)
+    }
+    presentToast('top', 'Cliente eliminado con éxito.')
+    setClients(prev => prev?.filter((cliente) => cliente.id !== clientId))
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const responseData = await fetch(`${process.env.REACT_APP_API_URL}/cliente/findAll`)
@@ -33,7 +43,7 @@ export default function Clientes() {
         clients == null ? <IonSpinner></IonSpinner>
           :
           <div>
-            {clients.map(({ nombre, identificacionNumero }, index) =>
+            {clients.map(({ nombre, identificacionNumero, id }, index) =>
               <div key={index} style={{
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -57,7 +67,7 @@ export default function Clientes() {
                   <IonButton color='primary'>
                     <IonIcon icon={createOutline}></IonIcon>
                   </IonButton>
-                  <IonButton color='danger'>
+                  <IonButton onClick={() => deleteClient(id)} color='danger'>
                     <IonIcon icon={trashOutline}></IonIcon>
                   </IonButton>
                 </div>
