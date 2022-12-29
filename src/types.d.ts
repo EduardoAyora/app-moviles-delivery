@@ -13,3 +13,10 @@ interface Cliente {
   telefono: string;
   correoElectronico: string;
 }
+
+interface Servicio {
+  id: number;
+  descripcion: string,
+  precioUnitario: number,
+  usuarioId: number
+}

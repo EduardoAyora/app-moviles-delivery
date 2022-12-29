@@ -1,7 +1,7 @@
-import React from 'react'
+import user from '../lib/user';
 
 export default function Home() {
   return (
-    <div>Bienvenido!</div>
+    <div>Bienvenido {user.name}!</div>
   )
 }

@@ -2,6 +2,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonCol
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import user from '../lib/user';
 
 import './Registro.css';
 
@@ -49,8 +50,10 @@ const Login: React.FC = () => {
             const response = await usuarioResponse.text();
             return presentToast('top', response)
           }
-          history.push("/")
-          return document.location.reload()
+          const response = await usuarioResponse.json();
+          user.id = response.id
+          user.name = response.username
+          return history.push("/")
         })}>
           <IonItem lines="full">
             <IonLabel position="floating">Email</IonLabel>
