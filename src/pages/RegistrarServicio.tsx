@@ -1,5 +1,4 @@
 import { IonButton, IonCol, IonContent, IonHeader, IonicSafeString, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
-import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import user from '../lib/user';
 

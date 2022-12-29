@@ -20,3 +20,20 @@ interface Servicio {
   precioUnitario: number,
   usuarioId: number
 }
+
+interface DetalleFactura {
+  cantidad: number;
+  precioUnitario: number;
+  total: number;
+  servicioId: number;
+}
+
+interface Factura {
+  fechaDeEmision: string;
+  subtotal: number;
+  impuesto: number;
+  total: number;
+  clienteId: number;
+  usuarioId: number;
+  detalles: DetalleFactura[]
+}

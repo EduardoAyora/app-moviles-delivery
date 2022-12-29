@@ -1,5 +1,7 @@
+import React from 'react'
+
 export default function Facturas() {
   return (
-    <div>Clientes</div>
+    <div>Facturas</div>
   )
 }
