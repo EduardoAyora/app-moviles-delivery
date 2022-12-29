@@ -2,6 +2,7 @@ import { IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeade
 import { addCircle, addCircleOutline, addOutline, createOutline } from 'ionicons/icons';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router';
 import user from '../lib/user';
 
 export default function EmitirFactura() {
@@ -10,12 +11,24 @@ export default function EmitirFactura() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const history = useHistory()
   const [client, setClient] = useState<Cliente>()
   const [details, setDetails] = useState<DetalleFactura[]>([])
+  const [services, setServices] = useState<Servicio[]>([])
 
   const inputClientRef = useRef<HTMLIonInputElement>(null)
 
   const [present] = useIonToast();
+
+  const fetchServices = async () => {
+    const responseData = await fetch(`${process.env.REACT_APP_API_URL}/servicio/findAll/${user.id}`)
+    if (!responseData.ok) {
+      const response = await responseData.text();
+      return presentToast('top', response)
+    }
+    const response = await responseData.json() as Servicio[];
+    setServices(response)
+  }
 
   const presentToast = (position: 'top' | 'middle' | 'bottom', message: string | IonicSafeString | undefined) => {
     present({
@@ -42,6 +55,7 @@ export default function EmitirFactura() {
 
   useEffect(() => {
     setPresentingElement(page.current);
+    fetchServices()
   }, []);
 
   function dismiss() {
@@ -59,23 +73,19 @@ export default function EmitirFactura() {
         <form onSubmit={handleSubmit(async (data) => {
           const currentDate = new Date()
           const currentDateString = currentDate.toISOString().split('T')[0]
+          const subtotal = details.reduce(
+            (prev, { total }) => prev + total, 0)
+          const impuesto = subtotal * 0.12
           const responseData = await fetch(`${process.env.REACT_APP_API_URL}/factura/create`, {
             body: JSON.stringify({
               ...data,
               usuarioId: user.id,
               fechaDeEmision: currentDateString,
               clienteId: client?.id,
-              subtotal: 29.63,
-              impuesto: 4.04,
-              total: 33.67,
-              detalles: [
-                {
-                  cantidad: 1,
-                  precioUnitario: 30.67,
-                  total: 30.67,
-                  servicioId: 2
-                }
-              ]
+              subtotal,
+              impuesto,
+              total: subtotal + impuesto,
+              detalles: details
             }),
             method: 'POST',
             headers: {
@@ -88,7 +98,7 @@ export default function EmitirFactura() {
           }
           const response = await responseData.json() as Servicio;
           presentToast('top', `Factura ${response.id} creada con éxito`)
-
+          history.push("/facturas")
         })}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <IonItem style={{ paddingRight: '1rem' }} lines="full">
@@ -115,7 +125,7 @@ export default function EmitirFactura() {
             </IonCol>
           </IonRow>
 
-          <IonGrid>
+          {details.length > 0 && <IonGrid>
             <IonRow>
               <IonCol>Id Servicio</IonCol>
               <IonCol>Cantidad</IonCol>
@@ -129,7 +139,7 @@ export default function EmitirFactura() {
                   <IonCol>{detail.total}</IonCol>
                 </IonRow>)
             }
-          </IonGrid>
+          </IonGrid>}
 
           <IonRow>
             <IonCol>
@@ -150,20 +160,21 @@ export default function EmitirFactura() {
         </IonHeader>
         <IonContent className="ion-padding">
           <IonList>
-            <IonItem onClick={() => {
-              setDetails(prev => [...prev, {
-                cantidad: 1,
-                precioUnitario: 30.67,
-                total: 30.67,
-                servicioId: 1
-              }])
-              dismiss()
-            }}>
-              <IonLabel>
-                <h2>Connor Smith</h2>
-                <p>Sales Rep</p>
-              </IonLabel>
-            </IonItem>
+            {services.map((service, i) =>
+              <IonItem key={i} onClick={() => {
+                setDetails(prev => [...prev, {
+                  cantidad: 1,
+                  precioUnitario: service.precioUnitario,
+                  total: service.precioUnitario,
+                  servicioId: service.id
+                }])
+                dismiss()
+              }}>
+                <IonLabel>
+                  <h2>{service.descripcion}</h2>
+                  <p>${service.precioUnitario}</p>
+                </IonLabel>
+              </IonItem>)}
           </IonList>
         </IonContent>
       </IonModal>
