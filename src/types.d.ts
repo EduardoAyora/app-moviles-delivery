@@ -29,6 +29,7 @@ interface DetalleFactura {
 }
 
 interface Factura {
+  id: number;
   fechaDeEmision: string;
   subtotal: number;
   impuesto: number;
