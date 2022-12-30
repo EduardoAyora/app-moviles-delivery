@@ -1,6 +1,6 @@
-import { IonButton, IonIcon, IonicSafeString, IonItem, IonList, IonSelect, IonSelectOption, IonSpinner, useIonToast } from "@ionic/react";
+import { IonButton, IonCol, IonIcon, IonicSafeString, IonItem, IonList, IonRow, IonSelect, IonSelectOption, IonSpinner, useIonToast } from "@ionic/react";
 import { useEffect, useState } from "react"
-import { closeCircleOutline, createOutline, trashOutline } from 'ionicons/icons';
+import { chevronDownOutline, chevronUpOutline, closeCircleOutline } from 'ionicons/icons';
 import user from "../lib/user";
 
 export default function Facturas() {
@@ -64,7 +64,7 @@ export default function Facturas() {
           }
           } interface="popover" placeholder="Emitidas">
             <IonSelectOption value="issued">Emitidas</IonSelectOption>
-            <IonSelectOption value="canceled">Canceladas</IonSelectOption>
+            <IonSelectOption value="canceled">Anuladas</IonSelectOption>
           </IonSelect>
         </IonItem>
       </IonList>
@@ -72,38 +72,92 @@ export default function Facturas() {
         facturas == null ? <IonSpinner></IonSpinner>
           :
           <div>
-            {facturas.map((factura, index) =>
-              <div key={index} style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: '#f7f7f7',
-                color: 'black',
-                borderColor: '#dedede',
-                border: '1px solid',
-                borderRadius: '5px',
-                padding: '0 1rem',
-                marginBottom: '1rem'
-              }}>
-                <div style={{ maxWidth: '60%' }}>
-                  <p>
-                    Factura: {factura.id}
-                  </p>
-                  <p>
-                    Total: ${factura.total}
-                  </p>
-                </div>
-                <div>
-                  {!isShowingCanceled &&
-                    <IonButton onClick={() => cancelInvoice(factura.id)} color='danger'>
-                      <IonIcon icon={closeCircleOutline}></IonIcon>
-                      Anular
-                    </IonButton>}
-                </div>
-              </div>)}
+            {
+              facturas.map((factura, index) => <ItemFactura
+                factura={factura}
+                cancelInvoice={cancelInvoice}
+                isShowingCanceled={isShowingCanceled}
+                key={index} />)
+            }
           </div>
       }
     </div>
   )
 }
+
+function ItemFactura({ factura, isShowingCanceled, cancelInvoice }:
+  { factura: Factura, isShowingCanceled: boolean, cancelInvoice: (id: number) => void }) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return <div style={{
+
+    backgroundColor: '#f7f7f7',
+    color: 'black',
+    borderColor: '#dedede',
+    border: '1px solid',
+    borderRadius: '5px',
+    padding: '0 1rem',
+    marginBottom: '1rem'
+  }}>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    }}>
+      <div style={{ maxWidth: '60%' }}>
+        <p>
+          Factura: {factura.id}
+        </p>
+        <p>
+          Fecha: {factura.fechaDeEmision}
+        </p>
+      </div>
+      <div>
+        {!isShowingCanceled &&
+          <IonButton onClick={() => cancelInvoice(factura.id)} color='danger'>
+            <IonIcon icon={closeCircleOutline}></IonIcon>
+            Anular
+          </IonButton>}
+      </div>
+    </div>
+    <div>
+      <div style={{ marginLeft: '45%', marginTop: '-5%' }}>{
+        isOpen ?
+          <IonIcon onClick={() => setIsOpen(false)} size="large" icon={chevronUpOutline}></IonIcon> :
+          <IonIcon onClick={() => setIsOpen(true)} size="large" icon={chevronDownOutline}></IonIcon>}
+      </div>
+      {
+        isOpen &&
+        <div>
+          <p>Cédula: {factura.cliente?.identificacionNumero}</p>
+          <p>Nombre: {factura.cliente?.nombre}</p>
+          <p>Dirección: {factura.cliente?.direccion}</p>
+          <p>Teléfono: {factura.cliente?.telefono}</p>
+          <p>Email: {factura.cliente?.correoElectronico}</p>
+          <p>Detalles:</p>
+          <div>
+            <IonRow className='row header'>
+              <IonCol className='col'>Servicio</IonCol>
+              <IonCol className='col'>Cantidad</IonCol>
+              <IonCol className='col'>Total</IonCol>
+            </IonRow>
+            {factura.detalles.map(
+              (detail) =>
+                <IonRow className='row'>
+                  <IonCol className='col'>{detail.servicio?.descripcion}</IonCol>
+                  <IonCol className='col'>{detail.cantidad}</IonCol>
+                  <IonCol className='col'>${detail.total.toFixed(2)}</IonCol>
+                </IonRow>)}
+          </div>
+          <p>Subtotal: ${factura.subtotal.toFixed(2)}</p>
+          <p>Iva: ${factura.impuesto.toFixed(2)}</p>
+          <p>
+            Total: ${factura.total.toFixed(2)}
+          </p>
+        </div>
+      }
+    </div>
+  </div>
+}
+
 

@@ -26,6 +26,7 @@ interface DetalleFactura {
   precioUnitario: number;
   total: number;
   servicioId: number;
+  servicio?: { descripcion: string }
 }
 
 interface Factura {
@@ -37,4 +38,13 @@ interface Factura {
   clienteId: number;
   usuarioId: number;
   detalles: DetalleFactura[]
+  cliente?: {
+    id: number;
+    tipoIdentificacion: string;
+    identificacionNumero: string;
+    nombre: string;
+    direccion: string;
+    telefono: string;
+    correoElectronico: string;
+  },
 }
