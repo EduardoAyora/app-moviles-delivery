@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
 import user from '../lib/user';
+import './EmitirFactura.css'
 
 export default function EmitirFactura() {
   const {
@@ -61,6 +62,9 @@ export default function EmitirFactura() {
   function dismiss() {
     modal.current?.dismiss();
   }
+
+  const subtotal = details.reduce((prev, { total }) => prev + total, 0)
+  const impuesto = subtotal * 0.12
 
   return (
     <IonPage>
@@ -126,20 +130,28 @@ export default function EmitirFactura() {
           </IonRow>
 
           {details.length > 0 && <IonGrid>
-            <IonRow>
-              <IonCol>Id Servicio</IonCol>
-              <IonCol>Cantidad</IonCol>
-              <IonCol>Total</IonCol>
+            <IonRow className='row header'>
+              <IonCol className='col'>Id Servicio</IonCol>
+              <IonCol className='col'>Cantidad</IonCol>
+              <IonCol className='col'>Total</IonCol>
             </IonRow>
             {details.map(
               (detail) =>
-                <IonRow>
-                  <IonCol>{detail.servicioId}</IonCol>
-                  <IonCol>{detail.cantidad}</IonCol>
-                  <IonCol>{detail.total}</IonCol>
+                <IonRow className='row'>
+                  <IonCol className='col'>{detail.servicioId}</IonCol>
+                  <IonCol className='col'>{detail.cantidad}</IonCol>
+                  <IonCol className='col'>${detail.total.toFixed(2)}</IonCol>
                 </IonRow>)
             }
           </IonGrid>}
+
+          <IonRow>
+            <IonCol>
+              <p>Subtotal: ${subtotal.toFixed(2)}</p>
+              <p>Iva: ${impuesto.toFixed(2)}</p>
+              <p>Total: ${(subtotal + impuesto).toFixed(2)}</p>
+            </IonCol>
+          </IonRow>
 
           <IonRow>
             <IonCol>
