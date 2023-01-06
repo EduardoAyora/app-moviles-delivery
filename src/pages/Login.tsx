@@ -53,7 +53,7 @@ const Login: React.FC = () => {
           const response = await usuarioResponse.json();
           user.id = response.id
           user.name = response.username
-          return history.push("/")
+          return history.push("/home")
         })}>
           <IonItem lines="full">
             <IonLabel position="floating">Email</IonLabel>

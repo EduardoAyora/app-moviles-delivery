@@ -20,7 +20,7 @@ export default function Navbar({ children }: { children: any }) {
             <div className="ion-padding">
               <ul className='navbar'>
                 <li style={{ listStyleType: 'none' }}>
-                  <Link to='/'>Home</Link>
+                  <Link to='/home'>Home</Link>
                 </li>
                 <li style={{ listStyleType: 'none' }}>
                   <Link to='/registro-cliente'>Registrar Cliente</Link>
@@ -39,6 +39,9 @@ export default function Navbar({ children }: { children: any }) {
                 </li>
                 <li style={{ listStyleType: 'none' }}>
                   <Link to='/facturas'>Facturas</Link>
+                </li>
+                <li style={{ listStyleType: 'none' }}>
+                  <Link to='/'>Logout</Link>
                 </li>
               </ul>
             </div>
