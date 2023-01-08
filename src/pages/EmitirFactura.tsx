@@ -194,7 +194,7 @@ export default function EmitirFactura() {
           <IonToolbar>
             <IonTitle>Seleccionar Servicio</IonTitle>
             <IonButtons slot="end">
-              <IonButton onClick={() => dismiss()}>Close</IonButton>
+              <IonButton onClick={() => dismiss()}>Cerrar</IonButton>
             </IonButtons>
           </IonToolbar>
         </IonHeader>
@@ -202,6 +202,8 @@ export default function EmitirFactura() {
           <IonList>
             {services.map((service, i) =>
               <IonItem key={i} onClick={() => {
+                const servicioEncontrado = details.find(detail => service.id === detail.servicioId)
+                if (servicioEncontrado) return presentToast('Este servicio ya fué agregado', false)
                 setDetails(prev => [...prev, {
                   cantidad: 1,
                   precioUnitario: service.precioUnitario,
