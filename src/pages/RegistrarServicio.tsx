@@ -2,7 +2,7 @@ import { IonButton, IonCol, IonContent, IonHeader, IonicSafeString, IonInput, Io
 import { useForm } from 'react-hook-form';
 import user from '../lib/user';
 
-export default function RegistrarServicio({ service, editService }: { service?: Servicio, editService?: (editedservice?: Servicio) => void }) {
+export default function RegistrarServicio({ service, postSubmitAction }: { service?: Servicio, postSubmitAction: (editedservice?: Servicio) => void }) {
   const {
     register,
     handleSubmit,
@@ -42,6 +42,7 @@ export default function RegistrarServicio({ service, editService }: { service?: 
             }
             const response = await responseData.json() as Servicio;
             presentToast('top', `Servicio ${response.id} creado con éxito`)
+            postSubmitAction(response)
           } else {
             const responseData = await fetch(`${process.env.REACT_APP_API_URL}/servicio/update`, {
               body: JSON.stringify({ ...data, id: service.id }),
@@ -56,7 +57,7 @@ export default function RegistrarServicio({ service, editService }: { service?: 
             }
             const response = await responseData.json() as Servicio;
             presentToast('top', `Servicio ${response.id} actualizado con éxito`)
-            editService && editService(response)
+            postSubmitAction(response)
           }
         })}>
           <IonItem lines="full">
@@ -70,7 +71,7 @@ export default function RegistrarServicio({ service, editService }: { service?: 
           <IonRow>
             <IonCol>
               <IonButton type="submit" color="primary" expand="block">{service ? 'Editar' : 'Crear'}</IonButton>
-              {service && <IonButton onClick={() => editService && editService(undefined)} color="danger" expand="block">Cancelar</IonButton>}
+              <IonButton onClick={() => postSubmitAction(undefined)} color="danger" expand="block">Cancelar</IonButton>
             </IonCol>
           </IonRow>
         </form>

@@ -51,9 +51,6 @@ const App: React.FC = () => (
           <Route exact path="/clientes">
             <Clientes />
           </Route>
-          <Route exact path="/registro-servicio">
-            <RegistrarServicio />
-          </Route>
           <Route exact path="/servicios">
             <Servicios />
           </Route>
