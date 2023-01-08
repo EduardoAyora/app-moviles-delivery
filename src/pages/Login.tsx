@@ -10,7 +10,6 @@ const Login: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
 
   const history = useHistory()

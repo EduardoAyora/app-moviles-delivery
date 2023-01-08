@@ -1,12 +1,10 @@
 import { IonButton, IonCol, IonContent, IonHeader, IonicSafeString, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
-import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function RegistrarCliente({ client, postSubmitAction }: { client?: Cliente, postSubmitAction: (editedClient?: Cliente) => void }) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
 
   const [present] = useIonToast();

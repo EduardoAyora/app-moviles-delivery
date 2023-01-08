@@ -6,7 +6,6 @@ export default function RegistrarServicio({ service, postSubmitAction }: { servi
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
 
   const [present] = useIonToast();

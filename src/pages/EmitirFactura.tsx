@@ -10,7 +10,6 @@ export default function EmitirFactura() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
   const history = useHistory()
   const [client, setClient] = useState<Cliente>()
