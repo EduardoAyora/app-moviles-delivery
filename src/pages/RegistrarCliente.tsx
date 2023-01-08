@@ -2,7 +2,7 @@ import { IonButton, IonCol, IonContent, IonHeader, IonicSafeString, IonInput, Io
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
-export default function RegistrarCliente({ client, editClient }: { client?: Cliente, editClient?: (editedClient?: Cliente) => void }) {
+export default function RegistrarCliente({ client, postSubmitAction }: { client?: Cliente, postSubmitAction: (editedClient?: Cliente) => void }) {
   const {
     register,
     handleSubmit,
@@ -42,6 +42,7 @@ export default function RegistrarCliente({ client, editClient }: { client?: Clie
             }
             const response = await responseData.json() as Cliente;
             presentToast('top', `Cliente ${response.nombre} creado con éxito`)
+            postSubmitAction()
           } else {
             const responseData = await fetch(`${process.env.REACT_APP_API_URL}/cliente/update`, {
               body: JSON.stringify({ ...data, id: client.id }),
@@ -56,7 +57,7 @@ export default function RegistrarCliente({ client, editClient }: { client?: Clie
             }
             const response = await responseData.json() as Cliente;
             presentToast('top', `Cliente ${response.nombre} actualizado con éxito`)
-            editClient && editClient(response)
+            postSubmitAction(response)
           }
         })}>
           <IonItem lines="full">
@@ -89,7 +90,7 @@ export default function RegistrarCliente({ client, editClient }: { client?: Clie
           <IonRow>
             <IonCol>
               <IonButton type="submit" color="primary" expand="block">{client ? 'Editar' : 'Crear'}</IonButton>
-              {client && <IonButton onClick={() => editClient && editClient(undefined)} color="danger" expand="block">Cancelar</IonButton>}
+              <IonButton onClick={() => postSubmitAction && postSubmitAction(undefined)} color="danger" expand="block">Cancelar</IonButton>
             </IonCol>
           </IonRow>
         </form>

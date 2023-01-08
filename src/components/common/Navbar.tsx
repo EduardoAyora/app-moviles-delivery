@@ -23,13 +23,7 @@ export default function Navbar({ children }: { children: any }) {
                   <Link to='/home'>Home</Link>
                 </li>
                 <li style={{ listStyleType: 'none' }}>
-                  <Link to='/registro-cliente'>Registrar Cliente</Link>
-                </li>
-                <li style={{ listStyleType: 'none' }}>
                   <Link to='/clientes'>Clientes</Link>
-                </li>
-                <li style={{ listStyleType: 'none' }}>
-                  <Link to='/registro-servicio'>Registrar Servicio</Link>
                 </li>
                 <li style={{ listStyleType: 'none' }}>
                   <Link to='/servicios'>Servicios</Link>

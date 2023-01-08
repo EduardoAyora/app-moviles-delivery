@@ -48,9 +48,6 @@ const App: React.FC = () => (
           <Route exact path="/home">
             <Home />
           </Route>
-          <Route exact path="/registro-cliente">
-            <RegistrarCliente />
-          </Route>
           <Route exact path="/clientes">
             <Clientes />
           </Route>
