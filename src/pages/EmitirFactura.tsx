@@ -46,6 +46,7 @@ export default function EmitirFactura() {
     const usuarioResponse = await fetch(`${process.env.REACT_APP_API_URL}/cliente/findByCedula/${ci}`)
     if (!usuarioResponse.ok) {
       const response = await usuarioResponse.text();
+      setClient(undefined)
       return presentToast(response, false)
     }
     const response = await usuarioResponse.json() as Cliente;
@@ -119,7 +120,18 @@ export default function EmitirFactura() {
             </IonButton>
           </div>
           <IonRow>
-            {client && <p style={{ fontSize: '1.1rem', paddingLeft: '1rem' }}>El cliente es: {client.nombre}</p>}
+            {client &&
+              <p style={{ fontSize: '1.1rem', paddingLeft: '1rem' }}>
+                Cliente: <span style={
+                  {
+                    backgroundColor: '#2cd36f',
+                    borderRadius: '5px',
+                    padding: '2px .6rem',
+                    marginLeft: '.5rem',
+                    color: 'white'
+                  }
+                }>{client.nombre}</span>
+              </p>}
           </IonRow>
           <IonRow>
             <IonCol>
