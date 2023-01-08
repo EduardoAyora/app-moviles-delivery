@@ -10,11 +10,15 @@ export default function Servicios() {
   const [serviceEdited, setServiceEdited] = useState<Servicio>()
   const [isCreatingService, setIsCreatingService] = useState<boolean>(false)
 
-  const presentToast = (position: 'top' | 'middle' | 'bottom', message: string | IonicSafeString | undefined) => {
+  const presentToast = (
+    message: string | IonicSafeString | undefined,
+    success: boolean
+  ) => {
     present({
       message: message,
       duration: 1500,
-      position: position
+      position: 'bottom',
+      color: success ? 'success' : 'danger'
     });
   };
 
@@ -22,9 +26,9 @@ export default function Servicios() {
     const responseData = await fetch(`${process.env.REACT_APP_API_URL}/servicio/delete/${serviceId}`)
     if (!responseData.ok) {
       const response = await responseData.text();
-      return presentToast('top', response)
+      return presentToast(response, false)
     }
-    presentToast('top', 'Servicio eliminado con éxito.')
+    presentToast('Servicio eliminado con éxito.', true)
     setServices(prev => prev?.filter((service) => service.id !== serviceId))
   }
 
@@ -32,7 +36,7 @@ export default function Servicios() {
     const responseData = await fetch(`${process.env.REACT_APP_API_URL}/servicio/findAll/${user.id}`)
     if (!responseData.ok) {
       const response = await responseData.text();
-      return presentToast('top', response)
+      return presentToast(response, false)
     }
     const response = await responseData.json() as Servicio[];
     setServices(response)

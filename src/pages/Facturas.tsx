@@ -8,11 +8,15 @@ export default function Facturas() {
   const [facturas, setFacturas] = useState<Factura[]>()
   const [isShowingCanceled, setIsShowingCanceled] = useState(false)
 
-  const presentToast = (position: 'top' | 'middle' | 'bottom', message: string | IonicSafeString | undefined) => {
+  const presentToast = (
+    message: string | IonicSafeString | undefined,
+    success: boolean
+  ) => {
     present({
       message: message,
       duration: 1500,
-      position: position
+      position: 'bottom',
+      color: success ? 'success' : 'danger'
     });
   };
 
@@ -20,9 +24,9 @@ export default function Facturas() {
     const responseData = await fetch(`${process.env.REACT_APP_API_URL}/factura/cancel/${invoiceId}`)
     if (!responseData.ok) {
       const response = await responseData.text();
-      return presentToast('top', response)
+      return presentToast(response, false)
     }
-    presentToast('top', 'Factura anulada con éxito.')
+    presentToast('Factura anulada con éxito.', true)
     setFacturas(prev => prev?.filter((factura) => factura.id !== invoiceId))
   }
 
@@ -31,7 +35,7 @@ export default function Facturas() {
     const responseData = await fetch(`${process.env.REACT_APP_API_URL}/factura/findAll/issued/${user.id}`)
     if (!responseData.ok) {
       const response = await responseData.text();
-      return presentToast('top', response)
+      return presentToast(response, false)
     }
     const response = await responseData.json() as Factura[];
     setIsShowingCanceled(false)
@@ -43,7 +47,7 @@ export default function Facturas() {
     const responseData = await fetch(`${process.env.REACT_APP_API_URL}/factura/findAll/cancel/${user.id}`)
     if (!responseData.ok) {
       const response = await responseData.text();
-      return presentToast('top', response)
+      return presentToast(response, false)
     }
     const response = await responseData.json() as Factura[];
     setIsShowingCanceled(true)

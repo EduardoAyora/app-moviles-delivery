@@ -25,17 +25,21 @@ export default function EmitirFactura() {
     const responseData = await fetch(`${process.env.REACT_APP_API_URL}/servicio/findAll/${user.id}`)
     if (!responseData.ok) {
       const response = await responseData.text();
-      return presentToast('top', response)
+      return presentToast(response, false)
     }
     const response = await responseData.json() as Servicio[];
     setServices(response)
   }
 
-  const presentToast = (position: 'top' | 'middle' | 'bottom', message: string | IonicSafeString | undefined) => {
+  const presentToast = (
+    message: string | IonicSafeString | undefined,
+    success: boolean
+  ) => {
     present({
       message: message,
       duration: 1500,
-      position: position
+      position: 'bottom',
+      color: success ? 'success' : 'danger'
     });
   };
 
@@ -43,7 +47,7 @@ export default function EmitirFactura() {
     const usuarioResponse = await fetch(`${process.env.REACT_APP_API_URL}/cliente/findByCedula/${ci}`)
     if (!usuarioResponse.ok) {
       const response = await usuarioResponse.text();
-      return presentToast('top', response)
+      return presentToast(response, false)
     }
     const response = await usuarioResponse.json() as Cliente;
     setClient(response)
@@ -98,10 +102,10 @@ export default function EmitirFactura() {
           })
           if (!responseData.ok) {
             const response = await responseData.text();
-            return presentToast('top', response)
+            return presentToast(response, false)
           }
           const response = await responseData.json() as Servicio;
-          presentToast('top', `Factura ${response.id} creada con éxito`)
+          presentToast(`Factura ${response.id} creada con éxito`, true)
           history.push("/facturas")
         })}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

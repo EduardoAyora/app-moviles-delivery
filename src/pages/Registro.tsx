@@ -16,11 +16,15 @@ const Home: React.FC = () => {
 
   const [present] = useIonToast();
 
-  const presentToast = (position: 'top' | 'middle' | 'bottom', message: string | IonicSafeString | undefined) => {
+  const presentToast = (
+    message: string | IonicSafeString | undefined,
+    success: boolean
+  ) => {
     present({
       message: message,
       duration: 1500,
-      position: position
+      position: 'bottom',
+      color: success ? 'success' : 'danger'
     });
   };
 
@@ -47,10 +51,10 @@ const Home: React.FC = () => {
           })
           if (!usuarioResponse.ok) {
             const response = await usuarioResponse.text();
-            return presentToast('top', response)
+            return presentToast(response, false)
           }
           const usuario = await usuarioResponse.json() as Usuario;
-          presentToast('top', `Usuario ${usuario.username} creado con éxito`)
+          presentToast(`Usuario ${usuario.username} creado con éxito`, true)
           return history.push("/login")
         })}>
           <IonItem lines="full">

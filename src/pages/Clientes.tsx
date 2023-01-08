@@ -9,11 +9,15 @@ export default function Clientes() {
   const [clientEdited, setClientEdited] = useState<Cliente>()
   const [isCreatingCliente, setIsCreatingCliente] = useState<boolean>(false)
 
-  const presentToast = (position: 'top' | 'middle' | 'bottom', message: string | IonicSafeString | undefined) => {
+  const presentToast = (
+    message: string | IonicSafeString | undefined,
+    success: boolean
+  ) => {
     present({
       message: message,
       duration: 1500,
-      position: position
+      position: 'bottom',
+      color: success ? 'success' : 'danger'
     });
   };
 
@@ -21,9 +25,9 @@ export default function Clientes() {
     const responseData = await fetch(`${process.env.REACT_APP_API_URL}/cliente/delete/${clientId}`)
     if (!responseData.ok) {
       const response = await responseData.text();
-      return presentToast('top', response)
+      return presentToast(response, false)
     }
-    presentToast('top', 'Cliente eliminado con éxito.')
+    presentToast('Cliente eliminado con éxito.', true)
     setClients(prev => prev?.filter((cliente) => cliente.id !== clientId))
   }
 
@@ -31,7 +35,7 @@ export default function Clientes() {
     const responseData = await fetch(`${process.env.REACT_APP_API_URL}/cliente/findAll`)
     if (!responseData.ok) {
       const response = await responseData.text();
-      return presentToast('top', response)
+      return presentToast(response, false)
     }
     const response = await responseData.json() as Cliente[];
     setClients(response)

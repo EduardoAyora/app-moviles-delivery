@@ -11,11 +11,15 @@ export default function RegistrarCliente({ client, postSubmitAction }: { client?
 
   const [present] = useIonToast();
 
-  const presentToast = (position: 'top' | 'middle' | 'bottom', message: string | IonicSafeString | undefined) => {
+  const presentToast = (
+    message: string | IonicSafeString | undefined,
+    success: boolean
+  ) => {
     present({
       message: message,
       duration: 1500,
-      position: position
+      position: 'bottom',
+      color: success ? 'success' : 'danger'
     });
   };
 
@@ -38,10 +42,10 @@ export default function RegistrarCliente({ client, postSubmitAction }: { client?
             })
             if (!responseData.ok) {
               const response = await responseData.text();
-              return presentToast('top', response)
+              return presentToast(response, false)
             }
             const response = await responseData.json() as Cliente;
-            presentToast('top', `Cliente ${response.nombre} creado con éxito`)
+            presentToast(`Cliente ${response.nombre} creado con éxito`, true)
             postSubmitAction()
           } else {
             const responseData = await fetch(`${process.env.REACT_APP_API_URL}/cliente/update`, {
@@ -53,10 +57,10 @@ export default function RegistrarCliente({ client, postSubmitAction }: { client?
             })
             if (!responseData.ok) {
               const response = await responseData.text();
-              return presentToast('top', response)
+              return presentToast(response, false)
             }
             const response = await responseData.json() as Cliente;
-            presentToast('top', `Cliente ${response.nombre} actualizado con éxito`)
+            presentToast(`Cliente ${response.nombre} actualizado con éxito`, true)
             postSubmitAction(response)
           }
         })}>

@@ -11,11 +11,15 @@ export default function RegistrarServicio({ service, postSubmitAction }: { servi
 
   const [present] = useIonToast();
 
-  const presentToast = (position: 'top' | 'middle' | 'bottom', message: string | IonicSafeString | undefined) => {
+  const presentToast = (
+    message: string | IonicSafeString | undefined,
+    success: boolean
+  ) => {
     present({
       message: message,
       duration: 1500,
-      position: position
+      position: 'bottom',
+      color: success ? 'success' : 'danger'
     });
   };
 
@@ -38,10 +42,10 @@ export default function RegistrarServicio({ service, postSubmitAction }: { servi
             })
             if (!responseData.ok) {
               const response = await responseData.text();
-              return presentToast('top', response)
+              return presentToast(response, false)
             }
             const response = await responseData.json() as Servicio;
-            presentToast('top', `Servicio ${response.id} creado con éxito`)
+            presentToast(`Servicio ${response.id} creado con éxito`, true)
             postSubmitAction(response)
           } else {
             const responseData = await fetch(`${process.env.REACT_APP_API_URL}/servicio/update`, {
@@ -53,10 +57,10 @@ export default function RegistrarServicio({ service, postSubmitAction }: { servi
             })
             if (!responseData.ok) {
               const response = await responseData.text();
-              return presentToast('top', response)
+              return presentToast(response, false)
             }
             const response = await responseData.json() as Servicio;
-            presentToast('top', `Servicio ${response.id} actualizado con éxito`)
+            presentToast(`Servicio ${response.id} actualizado con éxito`, true)
             postSubmitAction(response)
           }
         })}>

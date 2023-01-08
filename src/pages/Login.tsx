@@ -17,11 +17,15 @@ const Login: React.FC = () => {
 
   const [present] = useIonToast();
 
-  const presentToast = (position: 'top' | 'middle' | 'bottom', message: string | IonicSafeString | undefined) => {
+  const presentToast = (
+    message: string | IonicSafeString | undefined,
+    success: boolean
+  ) => {
     present({
       message: message,
       duration: 1500,
-      position: position
+      position: 'bottom',
+      color: success ? 'success' : 'danger'
     });
   };
 
@@ -48,7 +52,7 @@ const Login: React.FC = () => {
           })
           if (!usuarioResponse.ok) {
             const response = await usuarioResponse.text();
-            return presentToast('top', response)
+            return presentToast(response, false)
           }
           const response = await usuarioResponse.json();
           user.id = response.id
