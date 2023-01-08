@@ -81,7 +81,8 @@ export default function EmitirFactura() {
         <form onSubmit={handleSubmit(async (data) => {
           const currentDate = new Date()
           const currentDateString = currentDate.toISOString().split('T')[0]
-          const subtotal = details.reduce(
+          const filteredDetails = details.filter(detail => detail.cantidad !== 0)
+          const subtotal = filteredDetails.reduce(
             (prev, { total }) => prev + total, 0)
           const impuesto = subtotal * 0.12
           const responseData = await fetch(`${process.env.REACT_APP_API_URL}/factura/create`, {
@@ -93,7 +94,7 @@ export default function EmitirFactura() {
               subtotal,
               impuesto,
               total: subtotal + impuesto,
-              detalles: details
+              detalles: filteredDetails
             }),
             method: 'POST',
             headers: {
@@ -146,14 +147,14 @@ export default function EmitirFactura() {
 
           {details.length > 0 && <IonGrid>
             <IonRow className='row header'>
-              <IonCol className='col'>Id Servicio</IonCol>
+              <IonCol className='col'>Servicio</IonCol>
               <IonCol className='col'>Cantidad</IonCol>
               <IonCol className='col'>Total</IonCol>
             </IonRow>
             {details.map(
               (detail) =>
                 <IonRow className='row'>
-                  <IonCol className='col'>{detail.servicioId}</IonCol>
+                  <IonCol className='col'>{services.find(service => service.id === detail.servicioId)?.descripcion}</IonCol>
                   <IonCol className='col'>
                     <input className='input' value={detail.cantidad} onInput={(e: any) => setDetails(
                       prevDetails => prevDetails.map(prevDetail => {
