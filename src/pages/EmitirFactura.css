@@ -10,6 +10,8 @@ body {
   border: solid 1px grey;
   border-bottom-style: none;
   border-right-style: none;
+  display: flex;
+  align-items: center;
 }
 
 .col:last-child {

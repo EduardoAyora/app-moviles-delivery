@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonicSafeString, IonImg, IonInput, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
+import { InputChangeEventDetail, IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonicSafeString, IonImg, IonInput, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
 import { addCircle, addCircleOutline, addOutline, createOutline } from 'ionicons/icons';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -154,7 +154,20 @@ export default function EmitirFactura() {
               (detail) =>
                 <IonRow className='row'>
                   <IonCol className='col'>{detail.servicioId}</IonCol>
-                  <IonCol className='col'>{detail.cantidad}</IonCol>
+                  <IonCol className='col'>
+                    <IonInput value={detail.cantidad} onInput={(e: any) => setDetails(
+                      prevDetails => prevDetails.map(prevDetail => {
+                        if (detail.servicioId === prevDetail.servicioId) {
+                          return {
+                            ...prevDetail,
+                            cantidad: +e.target.value,
+                            total: +e.target.value * detail.precioUnitario
+                          }
+                        }
+                        return prevDetail
+                      })
+                    )} type="text" required></IonInput>
+                  </IonCol>
                   <IonCol className='col'>${detail.total.toFixed(2)}</IonCol>
                 </IonRow>)
             }
