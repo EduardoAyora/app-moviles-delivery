@@ -155,7 +155,7 @@ export default function EmitirFactura() {
                 <IonRow className='row'>
                   <IonCol className='col'>{detail.servicioId}</IonCol>
                   <IonCol className='col'>
-                    <IonInput value={detail.cantidad} onInput={(e: any) => setDetails(
+                    <input className='input' value={detail.cantidad} onInput={(e: any) => setDetails(
                       prevDetails => prevDetails.map(prevDetail => {
                         if (detail.servicioId === prevDetail.servicioId) {
                           return {
@@ -166,7 +166,7 @@ export default function EmitirFactura() {
                         }
                         return prevDetail
                       })
-                    )} type="text" required></IonInput>
+                    )} type="text" required></input>
                   </IonCol>
                   <IonCol className='col'>${detail.total.toFixed(2)}</IonCol>
                 </IonRow>)

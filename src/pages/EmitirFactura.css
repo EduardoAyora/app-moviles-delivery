@@ -21,3 +21,16 @@ body {
 .row:last-child .col {
   border-bottom: solid 1px grey;
 }
+
+.input[type=text] {
+  width: 100%;
+  outline: none;
+  padding: 8px 15px;
+  background-color: white;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin: 0;
+}
