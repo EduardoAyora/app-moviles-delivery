@@ -109,6 +109,7 @@ export default function EmitirFactura() {
           presentToast(`Factura ${response.id} creada con éxito`, true)
           history.push("/facturas")
         })}>
+
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <IonItem style={{ paddingRight: '1rem' }} lines="full">
               <IonLabel position="floating">Cliente</IonLabel>
@@ -120,6 +121,11 @@ export default function EmitirFactura() {
               Buscar Cliente
             </IonButton>
           </div>
+          <IonRow>
+            <IonCol>
+              <IonButton onClick={() => { }} type="submit" color="primary" expand="block">Crear Cliente</IonButton>
+            </IonCol>
+          </IonRow>
           <IonRow>
             {client &&
               <p style={{ fontSize: '1.1rem', paddingLeft: '1rem' }}>
@@ -134,6 +140,7 @@ export default function EmitirFactura() {
                 }>{client.nombre}</span>
               </p>}
           </IonRow>
+          <hr style={{ borderTop: '1px solid #e4e4e6' }} />
           <IonRow>
             <IonCol>
               <IonButton id="open-modal" color="primary" expand="block">
