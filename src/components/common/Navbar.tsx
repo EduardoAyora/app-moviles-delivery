@@ -1,11 +1,14 @@
 import { IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css'
 
 export default function Navbar({ children }: { children: any }) {
+  const menuRef = useRef<HTMLIonMenuElement>(null);
+
   return (
     <>
-      <IonMenu contentId="main-content">
+      <IonMenu ref={menuRef} contentId="main-content">
         <IonHeader>
           <IonToolbar>
             <IonTitle className='navbar-container' style={{
@@ -20,22 +23,22 @@ export default function Navbar({ children }: { children: any }) {
             <div className="ion-padding">
               <ul className='navbar'>
                 <li style={{ listStyleType: 'none' }}>
-                  <Link to='/home'>Home</Link>
+                  <Link onClick={() => menuRef.current?.close()} to='/home'>Home</Link>
                 </li>
                 <li style={{ listStyleType: 'none' }}>
-                  <Link to='/clientes'>Clientes</Link>
+                  <Link onClick={() => menuRef.current?.close()} to='/clientes'>Clientes</Link>
                 </li>
                 <li style={{ listStyleType: 'none' }}>
-                  <Link to='/servicios'>Servicios</Link>
+                  <Link onClick={() => menuRef.current?.close()} to='/servicios'>Servicios</Link>
                 </li>
                 <li style={{ listStyleType: 'none' }}>
-                  <Link to='/crear-factura'>Emitir factura</Link>
+                  <Link onClick={() => menuRef.current?.close()} to='/crear-factura'>Emitir factura</Link>
                 </li>
                 <li style={{ listStyleType: 'none' }}>
-                  <Link to='/facturas'>Facturas</Link>
+                  <Link onClick={() => menuRef.current?.close()} to='/facturas'>Facturas</Link>
                 </li>
                 <li style={{ listStyleType: 'none' }}>
-                  <Link to='/'>Logout</Link>
+                  <Link onClick={() => menuRef.current?.close()} to='/'>Logout</Link>
                 </li>
               </ul>
             </div>
