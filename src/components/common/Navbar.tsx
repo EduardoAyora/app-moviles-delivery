@@ -11,11 +11,7 @@ export default function Navbar({ children }: { children: any }) {
       <IonMenu ref={menuRef} contentId="main-content">
         <IonHeader>
           <IonToolbar>
-            <IonTitle className='navbar-container' style={{
-              color: 'white',
-              borderColor: '#848c98',
-              borderBottom: '1px solid'
-            }}>Menú</IonTitle>
+            <IonTitle>Menú</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent>

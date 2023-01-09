@@ -79,7 +79,7 @@ export default function EmitirFactura() {
             setClient(client)
             setIsCreatingCliente(false)
           }} /> :
-            <div>
+            <div style={{ height: '100%', minHeight: '100%' }}>
               <IonHeader collapse="condense">
                 <IonToolbar>
                   <IonTitle size="large">Factura</IonTitle>
