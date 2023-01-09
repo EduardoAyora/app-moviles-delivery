@@ -73,13 +73,13 @@ export default function EmitirFactura() {
 
   return (
     <IonPage>
-      <IonContent className="ion-padding" fullscreen>
+      <div className="ion-padding">
         {
           isCreatingCliente ? <RegistrarCliente postSubmitAction={(client) => {
             setClient(client)
             setIsCreatingCliente(false)
           }} /> :
-            <div style={{ height: '100%', minHeight: '100%' }}>
+            <div style={{ minHeight: '800px' }}>
               <IonHeader collapse="condense">
                 <IonToolbar>
                   <IonTitle size="large">Factura</IonTitle>
@@ -234,7 +234,7 @@ export default function EmitirFactura() {
               </IonModal>
             </div>
         }
-      </IonContent>
+      </div>
     </IonPage>
   )
 }
