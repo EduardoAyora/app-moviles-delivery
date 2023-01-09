@@ -44,7 +44,7 @@ export default function RegistrarCliente({ client, postSubmitAction }: { client?
             }
             const response = await responseData.json() as Cliente;
             presentToast(`Cliente ${response.nombre} creado con éxito`, true)
-            postSubmitAction()
+            postSubmitAction(response)
           } else {
             const responseData = await fetch(`${process.env.REACT_APP_API_URL}/cliente/update`, {
               body: JSON.stringify({ ...data, id: client.id }),
